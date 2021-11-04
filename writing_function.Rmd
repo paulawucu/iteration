@@ -1,0 +1,59 @@
+---
+title: "writing_function"
+author: "Paula Wu"
+date: "11/4/2021"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(rvest)
+```
+
+# Z Score
+```{r}
+x_vec = rnorm(25, mean = 5, sd = 4)
+
+(x_vec - mean(x_vec))/sd(x_vec)
+
+z_score = function(x){
+  z = (x-mean(x))/sd(x)
+  return(z)
+}
+
+z_score(x = x_vec)
+
+y_vec = rnorm(40, mean = 12, sd = .3)
+z_score(x = y_vec)
+```
+
+How great is this?
+```{r, eval = FALSE}
+z_score(3)
+z_scores("my name is jeff")
+z_score(mtcars)
+```
+Let's try again
+```{r}
+z_score = function(x){
+  if(is.numeric(x)){
+    stop("x needs to be numeric")
+  }
+  if(length(x)<3){
+    stop("x should be at least of length 3")
+  }
+  z = (x-mean(x))/sd(x)
+  return(z)
+}
+```
+
+```{r, error = TRUE}
+z_score(3)
+z_scores("my name is jeff")
+z_score(mtcars)
+```
+
