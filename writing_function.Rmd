@@ -52,8 +52,79 @@ z_score = function(x){
 ```
 
 ```{r, error = TRUE}
+# error = TRUE, intend to show the errors
 z_score(3)
 z_scores("my name is jeff")
 z_score(mtcars)
+```
+
+## Multiple returns 
+```{r}
+mean_sd = function(x){
+  if(!is.numeric(x)){
+    stop("x needs to be numeric")
+  }
+  if(length(x)<3){
+    stop("x should be at least of length 3")
+  }
+  
+  mean_x = mean(x)
+  sd_x = sd(x)
+  
+  output_df = 
+    tibble(
+    mean = mean_x,
+    sd = sd_x
+  )
+  return(output_df)
+}
+
+mean_sd(x_vec)
+```
+
+## Different sample sizes, means, sds
+
+```{r}
+stm_data = 
+  tibble(
+    x = rnorm(30, mean = 2, sd = 3)
+  )
+
+stm_data %>% 
+  summarize(
+    mean = mean(x),
+    sd = sd(x)
+  )
+```
+Let's write a function that simulates data, computes the mean and sd
+```{r}
+sim_mean_sd = function(n, mu, sigma){
+  sim_data = 
+  tibble(
+    x = rnorm(n, mean = mu, sd = sigma)
+  )
+
+  sim_data %>% 
+    summarize(
+      mean = mean(x),
+      sd = sd(x)
+    )
+}
+sim_mean_sd(30,4,4)
+```
+```{r}
+sim_mean_sd = function(n = 30, mu = 4, sigma = 3){
+  sim_data = 
+  tibble(
+    x = rnorm(n, mean = mu, sd = sigma)
+  )
+
+  sim_data %>% 
+    summarize(
+      mean = mean(x),
+      sd = sd(x)
+    )
+}
+sim_mean_sd (20)
 ```
 
